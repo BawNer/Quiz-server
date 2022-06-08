@@ -37,6 +37,8 @@ export class InterviewerEntity {
 
   @BeforeInsert()
   async generateLink() {
-    this.link = await uuid();
+    this.link = `${process.env.SERVER_PROTOCOL}://${
+      process.env.SERVER_NAME
+    }/join/result/${await uuid()}`;
   }
 }
