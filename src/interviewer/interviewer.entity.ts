@@ -7,6 +7,9 @@ export class InterviewerEntity {
   id: number;
 
   @Column()
+  quiz: number;
+
+  @Column()
   bio: string;
 
   @Column()
