@@ -1,13 +1,17 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { QuizEntity } from '../quiz/quiz.entity';
 
 @Entity('interviewers')
 export class InterviewerEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  quiz: number;
 
   @Column()
   bio: string;
@@ -44,4 +48,7 @@ export class InterviewerEntity {
       process.env.SERVER_NAME
     }/join/result/${await uuid()}`;
   }
+
+  @ManyToOne(() => QuizEntity, (quiz) => quiz.interviewer)
+  quiz: QuizEntity;
 }
