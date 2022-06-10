@@ -1,10 +1,10 @@
 import {
   BeforeInsert,
   Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+  Entity, JoinTable,
+  ManyToOne, OneToOne,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { v4 as uuid } from 'uuid';
 import { QuizEntity } from '../quiz/quiz.entity';
 
@@ -49,6 +49,6 @@ export class InterviewerEntity {
     }/join/result/${await uuid()}`;
   }
 
-  @ManyToOne(() => QuizEntity, (quiz) => quiz.interviewer)
+  @ManyToOne(() => QuizEntity, (quiz) => quiz.interviewers)
   quiz: QuizEntity;
 }

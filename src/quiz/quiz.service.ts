@@ -6,12 +6,15 @@ import { CreateQuizDto } from './dto/createQuiz.dto';
 import { QuizResponseInterface } from './types/quizResponse.interface';
 import { UserEntity } from '../user/user.entity';
 import { QuizResponseArrayInterface } from './types/QuizResponseArrayInterface';
+import { InterviewerEntity } from '../interviewer/interviewer.entity';
 
 @Injectable()
 export class QuizService {
   constructor(
     @InjectRepository(QuizEntity)
     private readonly quizRepository: Repository<QuizEntity>,
+    @InjectRepository(InterviewerEntity)
+    private readonly interviewerRepository: Repository<InterviewerEntity>,
   ) {}
 
   async findById(id: number): Promise<QuizEntity> {
@@ -54,23 +57,20 @@ export class QuizService {
     const queryBuilder = getRepository(QuizEntity)
       .createQueryBuilder('quiz')
       .leftJoinAndSelect('quiz.author', 'author')
-      .leftJoinAndSelect('quiz.position', 'position');
+      .leftJoinAndSelect('quiz.position', 'position')
+      .leftJoinAndSelect('quiz.interviewers', 'interviewers');
 
-    queryBuilder.orderBy('DESC');
+    queryBuilder.orderBy('quiz.id', 'DESC');
     const quizCount = await queryBuilder.getCount();
 
-    if (query.quiz) {
-      queryBuilder.andWhere('quiz.link = :link', { link: query.link });
+    if (query.id) {
+      queryBuilder.andWhere('quiz.link = :link', {
+        link: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_NAME}/join/quiz/${query.id}`,
+      });
     }
 
     if (query.status) {
       queryBuilder.andWhere('quiz.status = :status', { status: query.status });
-    }
-
-    if (query.interviewer) {
-      queryBuilder.andWhere('quiz.interviewer.id = :interviewer', {
-        interviewer: query.interviewer,
-      });
     }
 
     const quiz = await queryBuilder.getMany();

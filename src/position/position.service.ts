@@ -29,9 +29,10 @@ export class PositionService {
   async createPosition(
     createPositionDto: CreatePositionDto,
   ): Promise<PositionEntity> {
-    if (
-      !(await this.positionRepository.findOne({ name: createPositionDto.name }))
-    ) {
+    const position = await this.positionRepository.findOne({
+      name: createPositionDto.name,
+    });
+    if (position) {
       throw new HttpException(
         `Position with name ${createPositionDto.name} are taken`,
         HttpStatus.UNPROCESSABLE_ENTITY,

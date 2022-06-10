@@ -48,5 +48,5 @@ export class QuizEntity {
   position: PositionEntity;
 
   @OneToMany(() => InterviewerEntity, (interviewer) => interviewer.quiz)
-  interviewer: InterviewerEntity[];
+  interviewers: InterviewerEntity[];
 }

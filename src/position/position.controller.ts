@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -33,7 +34,7 @@ export class PositionController {
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async createPosition(
-    createPositionDto: CreatePositionDto,
+    @Body('position') createPositionDto: CreatePositionDto,
   ): Promise<PositionEntity> {
     return await this.positionService.createPosition(createPositionDto);
   }
@@ -42,7 +43,7 @@ export class PositionController {
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async updatePosition(
-    updatePositionDto: CreatePositionDto,
+    @Body('position') updatePositionDto: CreatePositionDto,
     @Param('id') id: number,
   ): Promise<PositionEntity> {
     return await this.positionService.updatePosition(updatePositionDto, id);
