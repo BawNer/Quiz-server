@@ -35,7 +35,7 @@ export class QuizEntity {
     answers: {
       label: string;
       isTrue: boolean;
-    };
+    }[];
   }[];
 
   @Column({ default: 'active' })
