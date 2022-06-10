@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
 @Entity({ name: 'quiz' })
 export class QuizEntity {
@@ -7,6 +8,13 @@ export class QuizEntity {
 
   @Column({ default: null })
   link: string;
+
+  @BeforeInsert()
+  async generateLink() {
+    this.link = `${process.env.SERVER_PROTOCOL}://${
+      process.env.SERVER_NAME
+    }/join/quiz/${await uuid()}`;
+  }
 
   @Column()
   title: string;
