@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './user/middlewares/auth.middleware';
 import { PositionModule } from './position/position.module';
 import { InterviewerModule } from './interviewer/interviewer.module';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { InterviewerModule } from './interviewer/interviewer.module';
     UserModule,
     PositionModule,
     InterviewerModule,
+    QuizModule,
   ],
   controllers: [AppController],
   providers: [AppService],
