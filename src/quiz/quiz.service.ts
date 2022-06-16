@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuizEntity } from './quiz.entity';
-import { getRepository, Repository } from 'typeorm';
+import { DeleteResult, getRepository, Repository } from 'typeorm';
 import { CreateQuizDto } from './dto/createQuiz.dto';
 import { QuizResponseInterface } from './types/quizResponse.interface';
 import { UserEntity } from '../user/user.entity';
@@ -79,6 +79,11 @@ export class QuizService {
       quiz,
       quizCount,
     };
+  }
+
+  async deleteQuiz(quizId: number): Promise<DeleteResult> {
+    const quiz = await this.findById(quizId)
+    return await this.quizRepository.delete({id: quiz.id})
   }
 
   buildResponse(quiz: QuizEntity): QuizResponseInterface {

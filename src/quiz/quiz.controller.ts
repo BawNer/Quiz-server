@@ -18,6 +18,7 @@ import { QuizResponseInterface } from './types/quizResponse.interface';
 import { User } from '../user/decorators/user.decorator';
 import { UserEntity } from '../user/user.entity';
 import { QuizResponseArrayInterface } from './types/QuizResponseArrayInterface';
+import { DeleteResult } from 'typeorm';
 
 @Controller('quiz')
 export class QuizController {
@@ -57,5 +58,11 @@ export class QuizController {
       author,
     );
     return this.quizService.buildResponse(quiz);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  async deleteQuiz(@Param('id') quizId: number): Promise<DeleteResult> {
+    return await this.quizService.deleteQuiz(quizId)
   }
 }
