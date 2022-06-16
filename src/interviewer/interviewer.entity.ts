@@ -44,11 +44,9 @@ export class InterviewerEntity {
 
   @BeforeInsert()
   async generateLink() {
-    this.link = `${process.env.SERVER_PROTOCOL}://${
-      process.env.SERVER_NAME
-    }/join/result/${await uuid()}`;
+    this.link = `join/result/${await uuid()}`;
   }
 
-  @ManyToOne(() => QuizEntity, (quiz) => quiz.interviewers)
+  @ManyToOne(() => QuizEntity, (quiz) => quiz.interviewers, { onDelete: 'CASCADE' })
   quiz: QuizEntity;
 }
