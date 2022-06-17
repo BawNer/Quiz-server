@@ -21,9 +21,7 @@ export class QuizEntity {
 
   @BeforeInsert()
   async generateLink() {
-    this.link = `${process.env.SERVER_PROTOCOL}://${
-      process.env.SERVER_NAME
-    }/join/quiz/${await uuid()}`;
+    this.link = `/join/quiz/${await uuid()}`;
   }
 
   @Column()
