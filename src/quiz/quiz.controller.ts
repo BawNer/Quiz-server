@@ -25,7 +25,6 @@ export class QuizController {
   constructor(private readonly quizService: QuizService) {}
 
   @Get()
-  @UseGuards(AuthGuard)
   async findAll(
     @Query() query: any,
     @User() author: UserEntity,
