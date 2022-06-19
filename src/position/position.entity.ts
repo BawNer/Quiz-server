@@ -9,6 +9,6 @@ export class PositionEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => QuizEntity, (quiz) => quiz.position)
+  @OneToMany(() => QuizEntity, (quiz) => quiz.position, { onUpdate: 'CASCADE' })
   quiz: QuizEntity[];
 }

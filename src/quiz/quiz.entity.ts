@@ -45,6 +45,6 @@ export class QuizEntity {
   @ManyToOne(() => PositionEntity, (position) => position.id)
   position: PositionEntity;
 
-  @OneToMany(() => InterviewerEntity, (interviewer) => interviewer.quiz, { onDelete: 'CASCADE' })
+  @OneToMany(() => InterviewerEntity, (interviewer) => interviewer.quiz, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   interviewers: InterviewerEntity[];
 }
